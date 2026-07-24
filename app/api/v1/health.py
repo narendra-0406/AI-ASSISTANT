@@ -1,11 +1,14 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from app.dependencies.common import get_settings
 
 router = APIRouter()
 
 @router.get("/health")
-def health_check():
+def health(settings=Depends(get_settings)):
+
+    
     return{
         "status": "healthy",
-        "application": "NBK AI Assistant",
-        "version": "1.0.0"
+        "application": settings.APP_NAME,
+        "version": settings.VERSION
     }
