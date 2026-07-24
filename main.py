@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from app.config.settings import settings
 from app.core.logger import logger
 from app.api.routes import api_router
+from fastapi.middleware.cors import CORSMiddleware
+from app.middleware.request_middleware import RequestMiddleware
 
 
 app = FastAPI(
@@ -9,6 +11,19 @@ app = FastAPI(
     title= settings.APP_NAME,
 
     version= settings.VERSION
+)
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(RequestMiddleware)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(api_router)
