@@ -6,6 +6,9 @@ from app.utils.loaders import (
     load_txt
 )
 
+from app.utils.splitters import split_text
+
+
 def extract_text(file_path: str):
 
     extension = os.path.splitext(file_path)[1].lower()
@@ -27,3 +30,20 @@ def extract_text(file_path: str):
         raise Exception(
             "Unsupported File"
         )
+
+
+def process_file(file_path: str):
+
+    text = extract_text(file_path)
+
+    chunks = split_text(text)
+
+    return {
+
+        "characters": len(text),
+
+        "chunks": len(chunks),
+
+        "preview": chunks[0] if chunks else ""
+
+    }
