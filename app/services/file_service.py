@@ -7,6 +7,7 @@ from app.utils.loaders import (
 )
 
 from app.utils.splitters import split_text
+from app.embeddings.huggingface import create_embeddings
 
 
 def extract_text(file_path: str):
@@ -38,12 +39,16 @@ def process_file(file_path: str):
 
     chunks = split_text(text)
 
+    embeddings = create_embeddings(chunks)
+
     return {
 
         "characters": len(text),
 
         "chunks": len(chunks),
 
-        "preview": chunks[0] if chunks else ""
+        "embedding_dimension": len(embeddings[0]),
+
+        "preview": chunks[0]
 
     }
