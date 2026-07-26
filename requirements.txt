@@ -18,3 +18,7 @@ numpy
 httpx
 requests
 pytest
+python-multipart
+pypdf
+python-docx
+langchain-text-splitters
